@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" th:href="@{/css/mystyle.css}">
+</head>
+<body>
+<div class="cv">
+    <section>
+        <h3 class = "text-center">List of all users on our site:</h3>
+        <div>
+            <table>
+                <tr>
+                    <th>User's id</th>
+                    <th>User's name</th>
+                </tr>
+                <tr th:each="user : ${usersIt}">
+                    <td th:text="${user.getId()}"></td>
+                    <td th:text="${user.name}"></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <a href="/">Log in as another user</a>
+</div>
+
+</body>
+</html>
