@@ -23,7 +23,7 @@ public class UsersController {
         return "index";
     }
 
-    @PostMapping("/submit-users")
+    @PostMapping("/")
     public String index(Model model, Users users) {
         usersRepository.save(users);
         Iterable<Users> usersIt = usersRepository.findAll();
