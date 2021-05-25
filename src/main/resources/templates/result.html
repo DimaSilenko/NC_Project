@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
-    <link rel="stylesheet" th:href="@{/css/mystyle.css}">
+    <link rel="stylesheet" th:href="@{/style/mystyle.css}">
 </head>
 <body>
 <div class="cv">
@@ -17,7 +17,7 @@
                 </tr>
                 <tr th:each="user : ${usersIt}">
                     <td th:text="${user.getId()}"></td>
-                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.username}"></td>
                 </tr>
             </table>
         </div>

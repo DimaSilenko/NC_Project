@@ -3,19 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
-    <link rel="stylesheet" th:href="@{/css/mystyle.css}">
+    <link rel="stylesheet" th:href="@{/style/mystyle.css}">
 </head>
 <body>
 <div class="cv">
     <section>
-        <h1 class = "text-center">Hello and welcome</h1>
-        <h2 class = "text-center">Please, enter your name</h2>
+        <h1 class = "text-center">Hello and welcome to our online cinema</h1>
+        <a class = "text-right" href="/login">login</a>
+        <div>
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Sign Out"/>
+            </form>
+        </div>
 
         <form class = "text-center" action="#" th:action="@{/}" th:object="${usersModel}" method="post">
-            <p>User name: <input type="text" th:field="*{name}" /></p>
+            <p>User name: <input type="text" th:field="*{username}" /></p>
             <p><input class = "buttons" type="submit" value="Submit" /> <input class = "buttons" type="reset" value="Reset" /></p>
         </form>
 
+    </section>
+
+    <section>
+        <div class = "products">
+            <div class = "newproducts" th:each="element : ${map}">
+                <div id = "newproducts_caption">
+                    <p th:text="${element.key.type}"></p>
+                </div>
+                <div class = "product" th:each="prod : ${element.value}" th:attr="onclick=|window.location.href='information?id=' + ${prod.id}|">
+                    <img class = "foto" th:src="@{'/images/' + ${prod.image}}" alt="Film's poster">
+                    <div class = "product_name" th:text="${prod.name}"></div>
+                    <div class="product_price">
+                        ₽ <span th:text="${prod.price}"></span><br>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 
