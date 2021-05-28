@@ -8,9 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collections;
-import java.util.Map;
 
 @Controller
 public class RegistrationController {
@@ -25,12 +25,13 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String registration(Model model, Users users) {
+    public String registration(Model model, Users users, RedirectAttributes attributes) {
         Users userFromDB = usersRepository.findByUsername(users.getUsername());
 
         if (userFromDB != null) {
-            model.addAttribute("message", "User exists");
-            return "registration";
+            attributes.addFlashAttribute("message", "User already exist!");
+            model.addAttribute("userModel", new Users());
+            return "redirect:/registration";
         }
 
         users.setActive(true);

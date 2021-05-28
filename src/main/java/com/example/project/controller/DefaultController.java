@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,31 +32,40 @@ public class DefaultController {
     UsersRepository usersRepository;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, Principal principal) {
+        if(principal == null) {
+            model.addAttribute("curUser", "noBody");
+        }
+        else {
+            model.addAttribute("curUser", principal.getName());
+        }
+
         Iterable<ProductType> types = productTypeRepository.findAll();
 
         Map<ProductType, List<Product>> map = new HashMap<>();
         types.forEach(type -> map.put(type, productRepository.findByProductType(type)));
         model.addAttribute("map", map);
-
-        Iterable<Users> usersIt = usersRepository.findAll();
-        model.addAttribute("usersIt", usersIt);
-        model.addAttribute("usersModel", new Users());
         return "index";
     }
 
     @GetMapping("/information")
-    public String product(@RequestParam("id") Long id, Model model) {
+    public String product(@RequestParam("id") Long id, Model model, Principal principal) {
         Product product = productRepository.findById(id).orElse(null);
         model.addAttribute("product", product);
+        if(principal == null) {
+            model.addAttribute("curUser", "noBody");
+        }
+        else {
+            model.addAttribute("curUser", principal.getName());
+        }
         return "information";
     }
 
-    @PostMapping("/")
+    /*@PostMapping("/")
     public String index(Model model, Users users) {
         usersRepository.save(users);
         Iterable<Users> usersIt = usersRepository.findAll();
         model.addAttribute("usersIt", usersIt);
         return "result";
-    }
+    }*/
 }

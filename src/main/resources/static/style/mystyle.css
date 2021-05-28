@@ -1,9 +1,9 @@
 html {
   font-family: sans-serif;
-  --main-color: #0000FF;
-  --secondary-color: #FF0000;
-  /*background-color: #000;
-  color: #ffffff;*/
+  --main-color: #00008B;
+  --secondary-color: #333333;
+  background-color: #e9faff;
+  /*color: #ffffff;*/
 }
 
 h1 {
@@ -46,6 +46,7 @@ th {
 }
 
 td {
+  text-align: center;
   padding: 10px 20px;
 }
 
@@ -55,6 +56,13 @@ td {
 
 .text-right {
   text-align: right;
+  margin: 0 auto 0 auto;
+}
+
+.text-info {
+  text-align: right;
+  margin-top: 62px;
+  margin-right: 8px;
 }
 
 .cv {
@@ -71,18 +79,14 @@ td {
   font-size: 14px;
   border: #1071FF 1px solid;
   color: #1071FF;
-  padding: 3px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin: 20px ;
   transition: .5s;
   border-radius: 0px;
 }
 .buttons:hover {
   top: 5px;
   transition: .5s;
-  color: #10FF58;
-  border: #10FF58 1px solid;
+  color: #000000;
+  border: #000000 1px solid;
   border-radius: 10px;
 }
 .buttons:active {
@@ -95,7 +99,7 @@ td {
 .products
 {
   float: right;
-  background-color: #f8f8f8;
+  /*background-color: #f8f8f8;*/
   /*background-color: red;*/
   margin-top: -20px;
 }
@@ -123,7 +127,7 @@ td {
 #newproducts_caption p
 {
   font-family: Roboto, sans-serif;
-  color:  #FF0000;
+  color:  var(--main-color);
   font-size: 22px;
   font-weight: 900;
   font-style: italic;
@@ -184,7 +188,7 @@ td {
 {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .foto_info

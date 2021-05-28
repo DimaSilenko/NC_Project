@@ -8,11 +8,23 @@
 <body>
 <div class="cv">
     <section>
-        <div class = "info">
-            <img class = "foto_info" th:src="@{'/images/' + ${product.image}}" alt="Film's poster">
-            <div class = "short_description">
+        <div class="text-info">
+            <p th:if="${curUser} == 'noBody'">You are not logged in</p>
+            <a class="text-right" href="/login" th:if="${curUser} == 'noBody'">login</a>
+            <div>
+                <form th:action="@{/logout}" th:if="${curUser} != 'noBody'" method="post">
+                    <p th:text="'Hello, ' + ${curUser}"></p>
+                    <input type="submit" class="buttons" value="Sign Out"/>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="info">
+            <img class="foto_info" th:src="@{'/images/' + ${product.image}}" alt="Film's poster">
+            <div class="short_description">
                 <h3 class="text-center" th:text="${product.name}"></h3>
-                <div class = "sh_desc">
+                <div class="sh_desc">
                     <table>
                         <tr>
                             <th>Age rating:</th>
@@ -36,10 +48,11 @@
                 <p>Buy ticket</p>
             </div>
         </div>
-        <div class = "description">
+        <div class="description">
             <h3>Description:</h3>
             <p th:text="${product.description}"></p>
         </div>
+        <a href="/">See all list of films</a>
     </section>
 </div>
 

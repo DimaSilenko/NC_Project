@@ -8,13 +8,19 @@
 <body>
 <div class="cv">
     <section>
-        <h1 class = "text-center">Hello and welcome to our online cinema</h1>
-        <a class = "text-right" href="/login">login</a>
-        <div>
-            <form th:action="@{/logout}" method="post">
-                <input type="submit" value="Sign Out"/>
-            </form>
+        <h1 class="text-center">Hello and welcome to our online cinema</h1>
+        <div class="text-right">
+            <p th:if="${curUser} == 'noBody'">You are not logged in</p>
+            <a class="text-right" href="/login" th:if="${curUser} == 'noBody'">login</a>
+            <div>
+                <form th:action="@{/logout}" th:if="${curUser} != 'noBody'" method="post">
+                    <p th:text="'Hello, ' + ${curUser}"></p>
+                    <input type="submit" class="buttons" value="Sign Out"/>
+                </form>
+            </div>
         </div>
+
+        <span><a href="/userList">Check all users on site</a></span>
 
         <!--<form class = "text-center" action="#" th:action="@{/}" th:object="${usersModel}" method="post">
             <p>User name: <input type="text" th:field="*{username}" /></p>
@@ -24,14 +30,15 @@
     </section>
 
     <section>
-        <div class = "products">
-            <div class = "newproducts" th:each="element : ${map}">
-                <div id = "newproducts_caption">
+        <div class="products">
+            <div class="newproducts" th:each="element : ${map}">
+                <div id="newproducts_caption">
                     <p th:text="${element.key.type}"></p>
                 </div>
-                <div class = "product" th:each="prod : ${element.value}" th:attr="onclick=|window.location.href='information?id=' + ${prod.id}|">
-                    <img class = "foto" th:src="@{'/images/' + ${prod.image}}" alt="Film's poster">
-                    <div class = "product_name" th:text="${prod.name}"></div>
+                <div class="product" th:each="prod : ${element.value}"
+                     th:attr="onclick=|window.location.href='information?id=' + ${prod.id}|">
+                    <img class="foto" th:src="@{'/images/' + ${prod.image}}" alt="Film's poster">
+                    <div class="product_name" th:text="${prod.name}"></div>
                     <div class="product_price">
                         ₽ <span th:text="${prod.price}"></span><br>
                     </div>
