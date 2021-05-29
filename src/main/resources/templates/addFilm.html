@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" th:href="@{/style/mystyle.css}">
+</head>
+<body>
+<div class="cv">
+    <section>
+        <h1 class="text-center">Add new film</h1>
+        <h2 class="text-center">Please, fill in all fields below</h2>
+
+        <form action="#" th:action="@{/addFilm}" th:object="${product}" enctype="multipart/form-data" method="post">
+            <p>Title: <input type="text" th:field="*{name}"></p>
+
+            <p>Ticket price: <input type="text" th:field="*{price}"></p>
+
+            <p>Description: <input type="text" th:field="*{description}"></p>
+
+            <p>Release year: <input type="text" th:field="*{year}"></p>
+
+            <p>PG: <input type="text" th:field="*{pg}"></p>
+
+            <p>Director's name: <input type="text" th:field="*{director}"></p>
+
+            <p>Type of film: <input type="text" th:object="${productType}" th:field="*{type}"></p>
+
+            <p>Poster: <input type="file" name="file"></p>
+
+            <p><input class="buttons" type="submit" value="Submit"/> <input class="buttons" type="reset" value="Reset"/></p>
+        </form>
+        <p th:text="${message}" th:if="${message ne null}"></p>
+
+
+    </section>
+</div>
+
+</body>
+</html>

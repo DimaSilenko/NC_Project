@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
@@ -20,7 +21,11 @@
             </div>
         </div>
 
-        <span><a href="/userList">Check all users on site</a></span>
+        <div sec:authorize="hasAuthority('ADMIN')" class="text-center">
+            <h2>Extra options:</h2>
+            <p><a href="/userList">Check all users on site</a></p>
+            <p><a href="/addFilm">Add new film</a></p>
+        </div>
 
         <!--<form class = "text-center" action="#" th:action="@{/}" th:object="${usersModel}" method="post">
             <p>User name: <input type="text" th:field="*{username}" /></p>

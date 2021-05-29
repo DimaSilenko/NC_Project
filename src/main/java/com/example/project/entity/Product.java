@@ -31,7 +31,7 @@ public class Product {
     //Режиссер
     private String director;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "prodyct_type_id")
     private ProductType productType;
 
