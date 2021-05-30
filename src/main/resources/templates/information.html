@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
@@ -51,6 +51,14 @@
         <div class="description">
             <h3>Description:</h3>
             <p th:text="${product.description}"></p>
+        </div>
+        <div sec:authorize="hasAuthority('ADMIN')" class="text-center">
+            <h2>Extra option:</h2>
+            <form th:action="@{/delete}" method="post" th:object="${product}">
+                <input type="hidden" th:field="*{id}">
+                <input type="submit" class="buttons text-center" value="Delete film"/>
+            </form>
+            <!--<p><a th:href="@{/information/${product.id}}">Delete film</a></p>-->
         </div>
         <a href="/">See all list of films</a>
     </section>

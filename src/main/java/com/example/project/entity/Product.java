@@ -3,6 +3,10 @@ package com.example.project.entity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity(name="product")
 public class Product {
@@ -11,24 +15,34 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(regexp = "[a-z A-Z0-9-]{1,100}")
+    @NotBlank
     private String name;
 
-    private Double price;
+    @Min(50)
+    private double price;
 
     private String image;
 
     //Общее описание
     @Column(length = 65535)
     @Type(type = "text")
+    @NotBlank
     private String description;
 
     //Год выпуска
-    private Integer year;
+    @Min(1927)
+    @Max(2021)
+    private int year;
 
     //Возрастной рейтинг
-    private Integer pg;
+    @Min(0)
+    @Max(21)
+    private int pg;
 
     //Режиссер
+    @Pattern(regexp = "[a-z A-Z]{1,100}")
+    @NotBlank
     private String director;
 
     @OneToOne

@@ -12,26 +12,52 @@
         <h1 class="text-center">Add new film</h1>
         <h2 class="text-center">Please, fill in all fields below</h2>
 
-        <form action="#" th:action="@{/addFilm}" th:object="${product}" enctype="multipart/form-data" method="post">
-            <p>Title: <input type="text" th:field="*{name}"></p>
+        <form class="text-center" action="#" th:action="@{/addFilm}" th:object="${product}" enctype="multipart/form-data" method="post">
 
-            <p>Ticket price: <input type="text" th:field="*{price}"></p>
-
-            <p>Description: <input type="text" th:field="*{description}"></p>
-
-            <p>Release year: <input type="text" th:field="*{year}"></p>
-
-            <p>PG: <input type="text" th:field="*{pg}"></p>
-
-            <p>Director's name: <input type="text" th:field="*{director}"></p>
-
-            <p>Type of film: <input type="text" th:object="${productType}" th:field="*{type}"></p>
-
-            <p>Poster: <input type="file" name="file"></p>
+            <table class="films">
+                <tr>
+                    <th>Title:</th>
+                    <th><input class="inputFilm" type="text" th:field="*{name}"></th>
+                    <th><div class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div></th>
+                </tr>
+                <tr>
+                    <th>Ticket price:</th>
+                    <th><input class="inputFilm" type="text" th:field="*{price}"></th>
+                    <th><div class="errors" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div></th>
+                </tr>
+                <tr>
+                    <th>Description:</th>
+                    <th><input class="inputFilm" type="text" th:field="*{description}"></th>
+                    <th><div class="errors" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div></th>
+                </tr>
+                <tr>
+                    <th>Release year:</th>
+                    <th><input class="inputFilm" type="text" th:field="*{year}"></th>
+                    <th><div class="errors" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div></th>
+                </tr>
+                <tr>
+                    <th>PG:</th>
+                    <th><input class="inputFilm" type="text" th:field="*{pg}"></th>
+                    <th><div class="errors" th:if="${#fields.hasErrors('pg')}" th:errors="*{pg}"></div></th>
+                </tr>
+                <tr>
+                    <th>Director's name:</th>
+                    <th><input class="inputFilm" type="text" th:field="*{director}"></th>
+                    <th><div class="errors" th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></div></th>
+                </tr>
+                <tr>
+                    <th>Type of film:</th>
+                    <th><input class="inputFilm" type="text" th:object="${productType}" th:field="*{type}"></th>
+                </tr>
+                <tr>
+                    <th>Poster:</th>
+                    <th><input type="file" name="file"></th>
+                    <th><p th:text="${message}" class="errors" th:if="${message ne null}"></p></th>
+                </tr>
+            </table>
 
             <p><input class="buttons" type="submit" value="Submit"/> <input class="buttons" type="reset" value="Reset"/></p>
         </form>
-        <p th:text="${message}" th:if="${message ne null}"></p>
 
 
     </section>

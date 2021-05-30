@@ -58,12 +58,4 @@ public class DefaultController {
         }
         return "information";
     }
-
-    /*@PostMapping("/")
-    public String index(Model model, Users users) {
-        usersRepository.save(users);
-        Iterable<Users> usersIt = usersRepository.findAll();
-        model.addAttribute("usersIt", usersIt);
-        return "result";
-    }*/
 }

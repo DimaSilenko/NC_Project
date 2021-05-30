@@ -12,19 +12,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -83,7 +82,6 @@ public class AdminController {
     }
 
 
-
     //Здесь более полезная часть про добавление и удаление
     // Add new film
     @GetMapping("/addFilm")
@@ -93,39 +91,54 @@ public class AdminController {
 
     @PostMapping("/addFilm")
     public String addFilmDB(
-            Product product,
+            @Valid Product product,
+            BindingResult bindingResult,
             ProductType productType,
             @RequestParam("file") MultipartFile file,
             RedirectAttributes attributes
     ) {
-        // check if file is empty
-        if (file.isEmpty()) {
-            attributes.addFlashAttribute("message", "Please select a file to upload.");
-            return "redirect:/addFilm";
-        }
+        // check validation errors
+        if (bindingResult.hasErrors()) {
+            return "/addFilm";
+        } else {
 
-        // normalize the file path
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            // check if file is empty
+            if (file.isEmpty()) {
+                attributes.addFlashAttribute("message", "Please select a file to upload.");
+                return "redirect:/addFilm";
+            }
 
-        // save the file on the local file system
-        try {
-            Path path = Paths.get(UPLOAD_DIR + fileName);
-            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            // normalize the file path
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+            // save the file on the local file system
+            try {
+                Path path = Paths.get(UPLOAD_DIR + fileName);
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
-        ProductType temp = productTypeRepository.findByType(productType.getType());
-        if (temp == null) {
-            productTypeRepository.save(productType);
+            ProductType temp = productTypeRepository.findByType(productType.getType());
+            if (temp == null) {
+                productTypeRepository.save(productType);
+            } else {
+                productType.setId(temp.getId());
+            }
+            product.setProductType(productType);
+            product.setImage(fileName);
+            productRepository.save(product);
+            return "redirect:/";
         }
-        else {
-            productType.setId(temp.getId());
-        }
-        product.setProductType(productType);
-        product.setImage(fileName);
-        productRepository.save(product);
+    }
+
+    @PostMapping("/delete")
+    public String delete(Model model, Product product) {
+        Optional<Product> productFromDB = productRepository.findById(product.getId());
+
+        productRepository.delete(productFromDB.get());
+
         return "redirect:/";
     }
 }
