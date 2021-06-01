@@ -2,7 +2,6 @@ package com.example.project.controller;
 
 import com.example.project.entity.Product;
 import com.example.project.entity.ProductType;
-import com.example.project.entity.Users;
 import com.example.project.repository.ProductRepository;
 import com.example.project.repository.ProductTypeRepository;
 import com.example.project.repository.UsersRepository;

@@ -21,7 +21,6 @@
                     <td th:text="${user.id}"></td>
                     <td th:text="${user.username}"></td>
                     <td><p th:each="role : ${user.roles}" th:text="${role} + ' '"></p></td>
-                    <td><a th:attr="onclick=|window.location.href='userEdit?id=' + ${user.id}|">Edit</a></td>
                 </tr>
             </table>
         </div>
