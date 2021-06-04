@@ -5,6 +5,7 @@ import com.example.project.entity.ProductType;
 import com.example.project.entity.Users;
 import com.example.project.model.ProductCreationRequest;
 import com.example.project.operations.OperationsHelper;
+import com.example.project.operations.ProductService;
 import com.example.project.repository.ProductRepository;
 import com.example.project.repository.ProductTypeRepository;
 import com.example.project.repository.UsersRepository;
@@ -36,15 +37,7 @@ public class RestAdminController {
         ProductType productType = productCreationRequest.getProductType();
         Product product = productCreationRequest.getProduct();
 
-        ProductType temp = productTypeRepository.findByType(productType.getType());
-        if (temp == null) {
-            productTypeRepository.save(productType);
-        } else {
-            productType.setId(temp.getId());
-        }
-        product.setProductType(temp);
-
-        return productRepository.save(product);
+        return productRepository.save(ProductService.saveToRepo(product, productType, productTypeRepository));
     }
 
     @DeleteMapping("restProducts/{id}")
