@@ -15,11 +15,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Pattern(regexp = "[a-z A-Z0-9-]{1,100}")
-    @NotBlank
+    @Pattern(regexp = "[a-z A-Z0-9-:,.]{1,100}", message = "Please, use English words and special symbols like : , . -")
+    @NotBlank(message = "Title cannot be empty")
     private String name;
 
-    @Min(50)
+    @Min(value = 50, message = "Lowest price is 50.0")
     private double price;
 
     private String image;
@@ -27,12 +27,12 @@ public class Product {
     //Общее описание
     @Column(length = 65535)
     @Type(type = "text")
-    @NotBlank
+    @NotBlank(message = "Description cannot be empty")
     private String description;
 
     //Год выпуска
-    @Min(1927)
-    @Max(2021)
+    @Min(value = 1927, message = "First film was created in 1927")
+    @Max(value = 2021, message = "Now is a 2021")
     private int year;
 
     //Возрастной рейтинг
@@ -41,8 +41,8 @@ public class Product {
     private int pg;
 
     //Режиссер
-    @Pattern(regexp = "[a-z A-Z]{1,100}")
-    @NotBlank
+    @Pattern(regexp = "[a-z A-Z,-]{1,100}", message = "Please, use English words and special symbols like , -")
+    @NotBlank(message = "Director's name cannot be empty")
     private String director;
 
     @OneToOne

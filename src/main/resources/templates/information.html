@@ -14,6 +14,8 @@
             <div>
                 <form th:action="@{/logout}" th:if="${curUser} != 'noBody'" method="post">
                     <p th:text="'Hello, ' + ${curUser}"></p>
+                    <p th:text="'Shopping Cart: ' + ${shoppingCart} + ' products'"></p>
+                    <p><a href="/shoppingCart">View shopping cart</a></p>
                     <input type="submit" class="buttons" value="Sign Out"/>
                 </form>
             </div>
@@ -45,7 +47,10 @@
                     </table>
                 </div>
                 <br>
-                <p>Buy ticket</p>
+                <form th:action="@{/buy}" class="text-center" th:object="${product}" method="post">
+                    <input type="hidden" th:field="*{id}">
+                    <input type="submit" class="buttons" value="Buy ticket"/>
+                </form>
             </div>
         </div>
         <div class="description">
@@ -53,7 +58,7 @@
             <p th:text="${product.description}"></p>
         </div>
         <div sec:authorize="hasAuthority('ADMIN')" class="text-center">
-            <h2>Extra option:</h2>
+            <h2>Admin option:</h2>
             <form th:action="@{/delete}" method="post" th:object="${product}">
                 <input type="hidden" th:field="*{id}">
                 <input type="submit" class="buttons text-center" value="Delete film"/>

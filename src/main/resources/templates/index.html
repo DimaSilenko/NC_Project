@@ -16,13 +16,15 @@
             <div>
                 <form th:action="@{/logout}" th:if="${curUser} != 'noBody'" method="post">
                     <p th:text="'Hello, ' + ${curUser}"></p>
+                    <p th:text="'Shopping Cart: ' + ${shoppingCart} + ' products'"></p>
+                    <p><a href="/shoppingCart">View shopping cart</a></p>
                     <input type="submit" class="buttons" value="Sign Out"/>
                 </form>
             </div>
         </div>
 
         <div sec:authorize="hasAuthority('ADMIN')" class="text-center">
-            <h2>Extra options:</h2>
+            <h2>Admin options:</h2>
             <p><a href="/userList">Check all users on site</a></p>
             <p><a href="/addFilm">Add new film</a></p>
         </div>

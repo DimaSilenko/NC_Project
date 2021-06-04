@@ -4,6 +4,7 @@ import com.example.project.entity.Product;
 import com.example.project.entity.ProductType;
 import com.example.project.entity.Users;
 import com.example.project.model.ProductCreationRequest;
+import com.example.project.operations.OperationsHelper;
 import com.example.project.repository.ProductRepository;
 import com.example.project.repository.ProductTypeRepository;
 import com.example.project.repository.UsersRepository;
@@ -61,20 +62,7 @@ public class RestAdminController {
 
     @PutMapping("/restUsers/{id}")
     public Users updateUser(@PathVariable(value = "id") Long userId, @RequestBody Users user) {
-        Users temp = usersRepository.findById(userId).orElse(null);
-
-        if (user.getUsername() == null)
-            user.setUsername(temp.getUsername());
-        if (user.getPassword() == null)
-            user.setPassword(temp.getPassword());
-        if (!user.isActive())
-            user.setActive(temp.isActive());
-        if (user.getRoles() == null)
-            user.setRoles(temp.getRoles());
-
-
-        user.setId(userId);
-        return usersRepository.save(user);
+        return usersRepository.save(OperationsHelper.check(userId, user, usersRepository));
     }
 }
 

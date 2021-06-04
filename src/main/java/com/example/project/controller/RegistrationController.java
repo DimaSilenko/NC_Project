@@ -4,6 +4,7 @@ import com.example.project.entity.Role;
 import com.example.project.entity.Users;
 import com.example.project.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,9 @@ import java.util.Collections;
 
 @Controller
 public class RegistrationController {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     UsersRepository usersRepository;
@@ -36,6 +40,7 @@ public class RegistrationController {
 
         users.setActive(true);
         users.setRoles(Collections.singleton(Role.USER));
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
         usersRepository.save(users);
 
         return "login";

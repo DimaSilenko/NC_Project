@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.entity.Product;
 import com.example.project.entity.ProductType;
+import com.example.project.operations.OperationsHelper;
 import com.example.project.repository.ProductRepository;
 import com.example.project.repository.ProductTypeRepository;
 import com.example.project.repository.UsersRepository;
@@ -11,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +32,14 @@ public class DefaultController {
     UsersRepository usersRepository;
 
     @GetMapping("/")
-    public String index(Model model, Principal principal) {
+    public String index(Model model, Principal principal, HttpServletRequest request) {
         if(principal == null) {
             model.addAttribute("curUser", "noBody");
         }
         else {
             model.addAttribute("curUser", principal.getName());
+            Cookie[] cookies = request.getCookies();
+            model.addAttribute("shoppingCart", OperationsHelper.culcCount(cookies, principal));
         }
 
         Iterable<ProductType> types = productTypeRepository.findAll();
@@ -46,7 +51,7 @@ public class DefaultController {
     }
 
     @GetMapping("/information")
-    public String product(@RequestParam("id") Long id, Model model, Principal principal) {
+    public String product(@RequestParam("id") Long id, Model model, Principal principal, HttpServletRequest request) {
         Product product = productRepository.findById(id).orElse(null);
         model.addAttribute("product", product);
         if(principal == null) {
@@ -54,6 +59,8 @@ public class DefaultController {
         }
         else {
             model.addAttribute("curUser", principal.getName());
+            Cookie[] cookies = request.getCookies();
+            model.addAttribute("shoppingCart", OperationsHelper.culcCount(cookies, principal));
         }
         return "information";
     }

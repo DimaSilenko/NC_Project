@@ -237,3 +237,25 @@ table.films td:nth-of-type(3) {
   border: 2px solid #eee;
   border-radius:10px;
 }
+
+.ticket {
+  width: 35px;
+  height: 25px;
+  display:block;
+  margin-right: 15px;
+  margin-left: 160px;
+}
+
+.inp {
+  display: flex;
+}
+
+.delete {
+  color: #fff; /* цвет текста */
+  width: 50px;
+  user-select: none; /* убирать выделение текста */
+  background: rgb(212,75,56); /* фон кнопки */
+  padding: .3em 1.5em; /* отступ от текста */
+}
+.delete:hover { background: rgb(232,95,76); } /* при наведении курсора мышки */
+.delete:active { background: rgb(152,15,0); } /* при нажатии */

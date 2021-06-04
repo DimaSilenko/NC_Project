@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" th:href="@{/style/mystyle.css}">
+    <script th:src="@{/js/priceChecker.js}"></script>
+</head>
+<body>
+<div class="cv">
+    <section>
+        <h1 class="text-center">This is your Shopping Cart:</h1>
+        <div>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Count of tickets</th>
+                    <th></th>
+                </tr>
+                <tr th:each="item: ${products}">
+                    <td th:text="${item.name}"></td>
+                    <td>
+                        <div class="inp">
+                            <input type="number" class="ticket" value="1"><p th:text="'  x '+${item.price} + ' ₽'"></p>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="delete" th:text="Delete" th:attr="onclick=|window.location.href='deleteTicket?id=' + ${item.id}|">></p>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center">
+                <button class="buttons">Checkout</button>
+            </div>
+        </div>
+        <a href="/">Back to shop</a>
+
+    </section>
+</div>
+
+</body>
+</html>
