@@ -26,7 +26,7 @@ public class ProductService {
         } else {
             productType.setId(temp.getId());
         }
-        product.setProductType(temp);
+        product.setProductType(productType);
 
         return product;
     }
