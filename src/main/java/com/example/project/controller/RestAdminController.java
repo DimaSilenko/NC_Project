@@ -10,12 +10,15 @@ import com.example.project.repository.ProductRepository;
 import com.example.project.repository.ProductTypeRepository;
 import com.example.project.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping ("/rest")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class RestAdminController {
 
     @Autowired
@@ -26,6 +29,10 @@ public class RestAdminController {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @GetMapping("/restProducts")
     public List<Product> retrieveAllProducts() {
@@ -55,7 +62,11 @@ public class RestAdminController {
 
     @PutMapping("/restUsers/{id}")
     public Users updateUser(@PathVariable(value = "id") Long userId, @RequestBody Users user) {
-        return usersRepository.save(OperationsHelper.check(userId, user, usersRepository));
+        Users u = OperationsHelper.check(userId, user, usersRepository, passwordEncoder);
+
+        if (u.getId() == null)
+            return u;
+        return usersRepository.save(u);
     }
 }
 
