@@ -1,67 +1,39 @@
 package com.example.project.controller;
 
-import com.example.project.entity.Product;
-import com.example.project.entity.ProductType;
-import com.example.project.operations.OperationsHelper;
-import com.example.project.repository.ProductRepository;
-import com.example.project.repository.ProductTypeRepository;
-import com.example.project.repository.UsersRepository;
+import com.example.project.service.DefaultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class DefaultController {
 
     @Autowired
-    ProductTypeRepository productTypeRepository;
-
-    @Autowired
-    ProductRepository productRepository;
-
-    @Autowired
-    UsersRepository usersRepository;
+    private DefaultService defaultService;
 
     @GetMapping("/")
     public String index(Model model, Principal principal, HttpServletRequest request) {
-        if(principal == null) {
-            model.addAttribute("curUser", "noBody");
-        }
-        else {
-            model.addAttribute("curUser", principal.getName());
-            Cookie[] cookies = request.getCookies();
-            model.addAttribute("shoppingCart", OperationsHelper.culcCount(cookies, principal));
-        }
+        model.addAttribute("curUser", defaultService.checkAuthorization(principal));
 
-        Iterable<ProductType> types = productTypeRepository.findAll();
+        model.addAttribute("shoppingCart", defaultService.getCountCookies(principal, request));
 
-        Map<ProductType, List<Product>> map = new HashMap<>();
-        types.forEach(type -> map.put(type, productRepository.findByProductType(type)));
-        model.addAttribute("map", map);
+        model.addAttribute("map", defaultService.getMapProductType());
         return "index";
     }
 
     @GetMapping("/information")
     public String product(@RequestParam("id") Long id, Model model, Principal principal, HttpServletRequest request) {
-        Product product = productRepository.findById(id).orElse(null);
-        model.addAttribute("product", product);
-        if(principal == null) {
-            model.addAttribute("curUser", "noBody");
-        }
-        else {
-            model.addAttribute("curUser", principal.getName());
-            Cookie[] cookies = request.getCookies();
-            model.addAttribute("shoppingCart", OperationsHelper.culcCount(cookies, principal));
-        }
+        model.addAttribute("product", defaultService.findProductById(id));
+
+        model.addAttribute("curUser", defaultService.checkAuthorization(principal));
+
+        model.addAttribute("shoppingCart", defaultService.getCountCookies(principal, request));
+
         return "information";
     }
 }
