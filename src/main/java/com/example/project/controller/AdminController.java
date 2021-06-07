@@ -2,10 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.entity.Product;
 import com.example.project.entity.ProductType;
-import com.example.project.operations.ProductService;
-import com.example.project.repository.ProductRepository;
-import com.example.project.repository.ProductTypeRepository;
-import com.example.project.repository.UsersRepository;
+import com.example.project.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,27 +15,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
     @Autowired
-    private UsersRepository usersRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private ProductTypeRepository productTypeRepository;
+    private AdminService adminService;
 
     @GetMapping("/userList")
     public String userList(Model model) {
-        model.addAttribute("allUsers", usersRepository.findAll());
+        model.addAttribute("allUsers", adminService.findAllUsers());
         return "userList";
     }
-
 
     // Add new film
     @GetMapping("/addFilm")
@@ -54,14 +43,12 @@ public class AdminController {
             @RequestParam("file") MultipartFile file,
             RedirectAttributes attributes
     ) {
-        return ProductService.addProduct(product, bindingResult, productType, file, attributes, productTypeRepository, productRepository);
+        return adminService.addProduct(product, bindingResult, productType, file, attributes);
     }
 
     @PostMapping("/delete")
-    public String delete(Model model, Product product) {
-        Optional<Product> productFromDB = productRepository.findById(product.getId());
-
-        productRepository.delete(productFromDB.get());
+    public String delete(Product product) {
+        adminService.deleteProduct(product.getId());
 
         return "redirect:/";
     }
