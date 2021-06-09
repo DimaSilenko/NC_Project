@@ -12,7 +12,7 @@
         <h1 class="text-center">Add new film</h1>
         <h2 class="text-center">Please, fill in all fields below</h2>
 
-        <form class="text-center" action="#" th:action="@{/addFilm}" th:object="${product}" enctype="multipart/form-data" method="post">
+        <form class="text-center" action="#" th:action="@{/addFilm}" th:object="${productDTO}" enctype="multipart/form-data" method="post">
 
             <table class="films">
                 <tr>
@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <th>Type of film:</th>
-                    <th><input class="inputFilm" type="text" th:object="${productType}" th:field="*{type}"></th>
+                    <th><input class="inputFilm" type="text" th:object="${productTypeDTO}" th:field="*{type}"></th>
                 </tr>
                 <tr>
                     <th>Poster:</th>

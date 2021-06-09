@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import com.example.project.dto.ProductDTO;
 import com.example.project.entity.Product;
 import com.example.project.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/buy")
-    public String buyTicket(Product productBuy, HttpServletResponse response, Principal principal) {
+    public String buyTicket(ProductDTO productBuy, HttpServletResponse response, Principal principal) {
 
         response.addCookie(shoppingCartService.addToShoppingCart(productBuy, principal));
 

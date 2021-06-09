@@ -1,10 +1,10 @@
 package com.example.project.service;
 
-import com.example.project.entity.Product;
-import com.example.project.entity.ProductType;
-import com.example.project.repository.ProductRepository;
-import com.example.project.repository.ProductTypeRepository;
+import com.example.project.dto.ProductDTO;
+import com.example.project.dto.ProductTypeDTO;
 import com.example.project.repository.UsersRepository;
+import com.example.project.service.dto.ProductService;
+import com.example.project.service.dto.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,10 @@ import java.util.Map;
 @Service
 public class DefaultService {
     @Autowired
-    ProductTypeRepository productTypeRepository;
+    ProductTypeService productTypeService;
 
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
 
     @Autowired
     UsersRepository usersRepository;
@@ -35,11 +35,11 @@ public class DefaultService {
         }
     }
 
-    public Map<ProductType, List<Product>> getMapProductType() {
-        Iterable<ProductType> types = productTypeRepository.findAll();
+    public Map<ProductTypeDTO, List<ProductDTO>> getMapProductType() {
+        Iterable<ProductTypeDTO> types = productTypeService.findAll();
 
-        Map<ProductType, List<Product>> map = new HashMap<>();
-        types.forEach(type -> map.put(type, productRepository.findByProductType(type)));
+        Map<ProductTypeDTO, List<ProductDTO>> map = new HashMap<>();
+        types.forEach(type -> map.put(type, productService.findByProductType(type)));
 
         return map;
     }
@@ -58,7 +58,7 @@ public class DefaultService {
         return count;
     }
 
-    public Product findProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+    public ProductDTO findProductById(Long id) {
+        return productService.findById(id);
     }
 }

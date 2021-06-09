@@ -1,5 +1,7 @@
 package com.example.project.controller;
 
+import com.example.project.dto.ProductDTO;
+import com.example.project.dto.ProductTypeDTO;
 import com.example.project.entity.Product;
 import com.example.project.entity.ProductType;
 import com.example.project.service.AdminService;
@@ -31,15 +33,15 @@ public class AdminController {
 
     // Add new film
     @GetMapping("/addFilm")
-    public String addFilm(Product product, ProductType productType) {
+    public String addFilm(ProductDTO productDTO, ProductTypeDTO productTypeDTO) {
         return "addFilm";
     }
 
     @PostMapping("/addFilm")
     public String addFilmDB(
-            @Valid Product product,
+            @Valid ProductDTO product,
             BindingResult bindingResult,
-            ProductType productType,
+            ProductTypeDTO productType,
             @RequestParam("file") MultipartFile file,
             RedirectAttributes attributes
     ) {
@@ -47,7 +49,7 @@ public class AdminController {
     }
 
     @PostMapping("/delete")
-    public String delete(Product product) {
+    public String delete(ProductDTO product) {
         adminService.deleteProduct(product.getId());
 
         return "redirect:/";

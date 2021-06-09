@@ -1,12 +1,14 @@
 package com.example.project.service;
 
-import com.example.project.entity.Product;
-import com.example.project.entity.ProductType;
+import com.example.project.dto.ProductDTO;
+import com.example.project.dto.ProductTypeDTO;
+import com.example.project.dto.UsersDTO;
 import com.example.project.entity.Users;
 import com.example.project.model.ProductCreationRequest;
-import com.example.project.repository.ProductRepository;
-import com.example.project.repository.ProductTypeRepository;
 import com.example.project.repository.UsersRepository;
+import com.example.project.service.dto.ProductService;
+import com.example.project.service.dto.ProductTypeService;
+import com.example.project.service.dto.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,46 +23,47 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdminService {
     @Autowired
-    private UsersRepository usersRepository;
+    private UsersService usersService;
+
+    @Autowired UsersRepository usersRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @Autowired
-    private ProductTypeRepository productTypeRepository;
+    private ProductTypeService productTypeService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<Users> findAllUsers() {
-        return usersRepository.findAll();
+    public List<UsersDTO> findAllUsers() {
+        return usersService.findAll();
     }
 
-    public List<Product> findAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDTO> findAllProducts() {
+        return productService.findAll();
     }
 
-    public Product saveToRepo(Product product, ProductType productType) {
-        ProductType temp = productTypeRepository.findByType(productType.getType());
+    public ProductDTO saveToRepo(ProductDTO product, ProductTypeDTO productType) {
+        ProductTypeDTO temp = productTypeService.findByType(productType.getType());
         if (temp == null) {
-            productTypeRepository.save(productType);
+            productType = productTypeService.save(productType);
         } else {
             productType.setId(temp.getId());
         }
-        product.setProductType(productType);
+        product.setProductType(productTypeService.setProductType(productType));
 
         return product;
     }
 
     public String addProduct(
-            Product product,
+            ProductDTO product,
             BindingResult bindingResult,
-            ProductType productType,
+            ProductTypeDTO productType,
             MultipartFile file,
             RedirectAttributes attributes
     ) {
@@ -90,22 +93,22 @@ public class AdminService {
             product = saveToRepo(product, productType);
 
             product.setImage(fileName);
-            productRepository.save(product);
+            productService.save(product);
             return "redirect:/";
         }
     }
 
     public void deleteProduct(Long productId) {
-        Optional<Product> productFromDB = productRepository.findById(productId);
+        ProductDTO productFromDB = productService.findById(productId);
 
-        productRepository.delete(productFromDB.get());
+        productService.delete(productFromDB);
     }
 
-    public Product restCreateProduct(ProductCreationRequest productCreationRequest) {
-        ProductType productType = productCreationRequest.getProductType();
-        Product product = productCreationRequest.getProduct();
+    public ProductDTO restCreateProduct(ProductCreationRequest productCreationRequest) {
+        ProductTypeDTO productType = productCreationRequest.getProductType();
+        ProductDTO product = productCreationRequest.getProduct();
 
-        return productRepository.save(saveToRepo(product, productType));
+        return productService.save(saveToRepo(product, productType));
     }
 
     public Users restUpdateProduct(Long userId, Users user) {
