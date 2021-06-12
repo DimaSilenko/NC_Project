@@ -49,13 +49,17 @@ public class AdminService {
         return productService.findAll();
     }
 
-    public ProductDTO saveToRepo(ProductDTO product, ProductTypeDTO productType) {
+    public ProductTypeDTO saveProductType(ProductTypeDTO productType) {
         ProductTypeDTO temp = productTypeService.findByType(productType.getType());
         if (temp == null) {
             productType = productTypeService.save(productType);
         } else {
             productType.setId(temp.getId());
         }
+        return productType;
+    }
+
+    public ProductDTO updateProductWithProductType(ProductDTO product, ProductTypeDTO productType) {
         product.setProductType(productTypeService.setProductType(productType));
 
         return product;
@@ -88,10 +92,12 @@ public class AdminService {
                 Path path = Paths.get(UPLOAD_DIR + fileName);
                 Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
-                e.printStackTrace();
+                return "errorPage";
             }
 
-            product = saveToRepo(product, productType);
+
+            productType = saveProductType(productType);
+            product = updateProductWithProductType(product, productType);
 
             product.setImage(fileName);
             productService.save(product);
@@ -109,7 +115,9 @@ public class AdminService {
         ProductTypeDTO productType = productCreationRequest.getProductType();
         ProductDTO product = productCreationRequest.getProduct();
 
-        return productService.save(saveToRepo(product, productType));
+        productType = saveProductType(productType);
+
+        return productService.save(updateProductWithProductType(product, productType));
     }
 
     public Users restUpdateUser(Long userId, Users user) {
