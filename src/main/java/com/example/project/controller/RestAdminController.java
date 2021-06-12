@@ -1,10 +1,10 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ProductDTO;
-import com.example.project.entity.Users;
+import com.example.project.dto.UsersDTO;
 import com.example.project.model.ProductCreationRequest;
-import com.example.project.repository.UsersRepository;
 import com.example.project.service.AdminService;
+import com.example.project.service.dto.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class RestAdminController {
     private AdminService adminService;
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UsersService usersService;
 
 
     @GetMapping("/restProducts")
@@ -40,13 +40,18 @@ public class RestAdminController {
     }
 
     @GetMapping("/restUsers")
-    public List<Users> retrieveAllUsers() {
-        return usersRepository.findAll();
+    public List<UsersDTO> retrieveAllUsers() {
+        return usersService.findAll();
     }
 
     @PutMapping("/restUsers/{id}")
-    public Users updateUser(@PathVariable(value = "id") Long userId, @RequestBody Users user) {
+    public UsersDTO updateUser(@PathVariable(value = "id") Long userId, @RequestBody UsersDTO user) {
         return adminService.restUpdateUser(userId, user);
+    }
+
+    @PutMapping("/restActiveUser/{id}")
+    public String changeActiveStatus(@PathVariable(value = "id") Long userId) {
+        return usersService.changeActiveStatus(userId);
     }
 }
 

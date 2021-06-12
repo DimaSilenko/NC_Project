@@ -1,6 +1,6 @@
 package com.example.project.controller;
 
-import com.example.project.entity.Users;
+import com.example.project.dto.UsersDTO;
 import com.example.project.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,16 +18,16 @@ public class RegistrationController {
     // get registration page
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("usersModel", new Users());
+        model.addAttribute("usersDTOModel", new UsersDTO());
         return "registration";
     }
 
     // post registration info and return login page
     @PostMapping("/registration")
-    public String registration(Model model, Users users, RedirectAttributes attributes) {
+    public String registration(Model model, UsersDTO users, RedirectAttributes attributes) {
         if (!registrationService.addNewUser(users)) {
             attributes.addFlashAttribute("message", "User already exist!");
-            model.addAttribute("userModel", new Users());
+            model.addAttribute("userDTOModel", new UsersDTO());
             return "redirect:/registration";
         }
 

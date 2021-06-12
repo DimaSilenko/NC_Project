@@ -1,8 +1,8 @@
 package com.example.project.service;
 
+import com.example.project.dto.UsersDTO;
 import com.example.project.entity.Role;
-import com.example.project.entity.Users;
-import com.example.project.repository.UsersRepository;
+import com.example.project.service.dto.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,19 +15,18 @@ public class RegistrationService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UsersRepository usersRepository;
+    UsersService usersService;
 
-    public boolean addNewUser(Users users) {
-        Users userFromDB = usersRepository.findByUsername(users.getUsername());
+    public boolean addNewUser(UsersDTO users) {
+        UsersDTO userFromDB = usersService.findByUsername(users.getUsername());
 
         if (userFromDB != null) {
             return false;
         }
 
-        users.setActive(true);
         users.setRoles(Collections.singleton(Role.USER));
         users.setPassword(passwordEncoder.encode(users.getPassword()));
-        usersRepository.save(users);
+        usersService.save(users);
 
         return true;
     }

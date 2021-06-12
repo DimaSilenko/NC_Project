@@ -23,9 +23,6 @@ public class DefaultService {
     @Autowired
     ProductService productService;
 
-    @Autowired
-    UsersRepository usersRepository;
-
     public String checkAuthorization(Principal principal) {
         if (principal == null) {
             return "noBody";

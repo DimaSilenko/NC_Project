@@ -3,9 +3,7 @@ package com.example.project.service;
 import com.example.project.dto.ProductDTO;
 import com.example.project.dto.ProductTypeDTO;
 import com.example.project.dto.UsersDTO;
-import com.example.project.entity.Users;
 import com.example.project.model.ProductCreationRequest;
-import com.example.project.repository.UsersRepository;
 import com.example.project.service.dto.ProductService;
 import com.example.project.service.dto.ProductTypeService;
 import com.example.project.service.dto.UsersService;
@@ -28,9 +26,6 @@ import java.util.List;
 public class AdminService {
     @Autowired
     private UsersService usersService;
-
-    @Autowired
-    UsersRepository usersRepository;
 
     @Autowired
     private ProductService productService;
@@ -120,19 +115,17 @@ public class AdminService {
         return productService.save(updateProductWithProductType(product, productType));
     }
 
-    public Users restUpdateUser(Long userId, Users user) {
+    public UsersDTO restUpdateUser(Long userId, UsersDTO user) {
 
-        Users temp = usersRepository.findById(userId).orElse(new Users());
+        UsersDTO temp = usersService.findById(userId);
         if (user.getUsername() != null
                 && !user.getUsername().equals(temp.getUsername())
-                && usersRepository.findByUsername(user.getUsername()) != null) {
-            user = new Users();
+                && usersService.findByUsername(user.getUsername()) != null) {
+            user = new UsersDTO();
             user.setUsername("Username is already taken");
         } else {
             if (user.getUsername() == null)
                 user.setUsername(temp.getUsername());
-            if (!user.isActive())
-                user.setActive(temp.isActive());
             if (user.getRoles() == null)
                 user.setRoles(temp.getRoles());
             if (user.getPassword() == null)
@@ -145,6 +138,6 @@ public class AdminService {
 
         if (user.getId() == null)
             return user;
-        return usersRepository.save(user);
+        return usersService.save(user);
     }
 }

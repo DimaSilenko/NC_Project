@@ -69,10 +69,14 @@ public class MappingUtils {
 
     // From entity to dto
     public UsersDTO mapToUsersDTO(Users users) {
+        if (users == null)
+            return null;
+
         UsersDTO dto = new UsersDTO();
 
         dto.setId(users.getId());
         dto.setUsername(users.getUsername());
+        dto.setPassword(users.getPassword());
         dto.setRoles(users.getRoles());
 
         return dto;
@@ -84,6 +88,7 @@ public class MappingUtils {
 
         users.setId(dto.getId());
         users.setUsername(dto.getUsername());
+        users.setPassword(dto.getPassword());
         users.setRoles(dto.getRoles());
 
         return users;
