@@ -28,7 +28,7 @@ public class ProductService {
     public ProductDTO findById(Long id) {
         return mappingUtils.mapToProductDTO(
                 productRepository.findById(id)
-                .orElse(new Product())
+                        .orElse(new Product())
         );
     }
 

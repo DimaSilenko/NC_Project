@@ -27,10 +27,9 @@ public class DefaultService {
     UsersRepository usersRepository;
 
     public String checkAuthorization(Principal principal) {
-        if(principal == null) {
+        if (principal == null) {
             return "noBody";
-        }
-        else {
+        } else {
             return principal.getName();
         }
     }

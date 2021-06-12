@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name="product")
+@Entity(name = "product")
 @Data
 public class Product {
 
@@ -12,25 +12,29 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Film title
     private String name;
 
+    // Ticket price
     private double price;
 
+    // Poster
     private String image;
 
-    //Общее описание
+    // General description
     @Column(length = 65535)
     private String description;
 
-    //Год выпуска
+    // Release year
     private int year;
 
-    //Возрастной рейтинг
+    // Age rating
     private int pg;
 
-    //Режиссер
+    // Film's director
     private String director;
 
+    //Type of film
     @OneToOne
     @JoinColumn(name = "prodyct_type_id")
     private ProductType productType;

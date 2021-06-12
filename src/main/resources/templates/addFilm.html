@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>AddFilm</title>
     <link rel="stylesheet" th:href="@{/style/mystyle.css}">
 </head>
 <body>
@@ -12,38 +12,52 @@
         <h1 class="text-center">Add new film</h1>
         <h2 class="text-center">Please, fill in all fields below</h2>
 
-        <form class="text-center" action="#" th:action="@{/addFilm}" th:object="${productDTO}" enctype="multipart/form-data" method="post">
+        <form class="text-center" action="#" th:action="@{/addFilm}" th:object="${productDTO}"
+              enctype="multipart/form-data" method="post">
 
             <table class="films">
                 <tr>
                     <th>Title:</th>
                     <th><input class="inputFilm" type="text" th:field="*{name}"></th>
-                    <th><div class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div></th>
+                    <th>
+                        <div class="errors" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </th>
                 </tr>
                 <tr>
                     <th>Ticket price:</th>
                     <th><input class="inputFilm" type="text" th:field="*{price}"></th>
-                    <th><div class="errors" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div></th>
+                    <th>
+                        <div class="errors" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                    </th>
                 </tr>
                 <tr>
                     <th>Description:</th>
                     <th><input class="inputFilm" type="text" th:field="*{description}"></th>
-                    <th><div class="errors" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div></th>
+                    <th>
+                        <div class="errors" th:if="${#fields.hasErrors('description')}"
+                             th:errors="*{description}"></div>
+                    </th>
                 </tr>
                 <tr>
                     <th>Release year:</th>
                     <th><input class="inputFilm" type="text" th:field="*{year}"></th>
-                    <th><div class="errors" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div></th>
+                    <th>
+                        <div class="errors" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+                    </th>
                 </tr>
                 <tr>
                     <th>PG:</th>
                     <th><input class="inputFilm" type="text" th:field="*{pg}"></th>
-                    <th><div class="errors" th:if="${#fields.hasErrors('pg')}" th:errors="*{pg}"></div></th>
+                    <th>
+                        <div class="errors" th:if="${#fields.hasErrors('pg')}" th:errors="*{pg}"></div>
+                    </th>
                 </tr>
                 <tr>
                     <th>Director's name:</th>
                     <th><input class="inputFilm" type="text" th:field="*{director}"></th>
-                    <th><div class="errors" th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></div></th>
+                    <th>
+                        <div class="errors" th:if="${#fields.hasErrors('director')}" th:errors="*{director}"></div>
+                    </th>
                 </tr>
                 <tr>
                     <th>Type of film:</th>
@@ -56,10 +70,11 @@
                 </tr>
             </table>
 
-            <p><input class="buttons" type="submit" value="Submit"/> <input class="buttons" type="reset" value="Reset"/></p>
+            <p><input class="buttons" type="submit" value="Submit"/> <input class="buttons" type="reset" value="Reset"/>
+            </p>
         </form>
 
-
+        <a href="/">Back home</a>
     </section>
 </div>
 

@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="product_type")
+@Entity(name = "product_type")
 @Data
 public class ProductType {
 
@@ -15,5 +15,6 @@ public class ProductType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Type of film
     private String type;
 }

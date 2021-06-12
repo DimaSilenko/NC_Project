@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MappingUtils {
-    //из entity в dto
+    // From entity to dto
     public ProductDTO mapToProductDTO(Product product) {
         ProductDTO dto = new ProductDTO();
 
@@ -27,7 +27,7 @@ public class MappingUtils {
         return dto;
     }
 
-    //из dto в entity
+    // From dto to entity
     public Product mapToProduct(ProductDTO dto) {
         Product product = new Product();
 
@@ -44,6 +44,7 @@ public class MappingUtils {
         return product;
     }
 
+    // From entity to dto
     public ProductTypeDTO mapToProductTypeDTO(ProductType productType) {
         if (productType == null)
             return null;
@@ -56,6 +57,7 @@ public class MappingUtils {
         return dto;
     }
 
+    // From dto to entity
     public ProductType mapToProductType(ProductTypeDTO dto) {
         ProductType productType = new ProductType();
 
@@ -65,6 +67,7 @@ public class MappingUtils {
         return productType;
     }
 
+    // From entity to dto
     public UsersDTO mapToUsersDTO(Users users) {
         UsersDTO dto = new UsersDTO();
 
@@ -75,6 +78,7 @@ public class MappingUtils {
         return dto;
     }
 
+    // From dto to entity
     public Users mapToUsers(UsersDTO dto) {
         Users users = new Users();
 

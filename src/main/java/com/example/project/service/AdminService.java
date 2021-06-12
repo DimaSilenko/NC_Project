@@ -29,7 +29,8 @@ public class AdminService {
     @Autowired
     private UsersService usersService;
 
-    @Autowired UsersRepository usersRepository;
+    @Autowired
+    UsersRepository usersRepository;
 
     @Autowired
     private ProductService productService;
@@ -119,8 +120,7 @@ public class AdminService {
                 && usersRepository.findByUsername(user.getUsername()) != null) {
             user = new Users();
             user.setUsername("Username is already taken");
-        }
-        else {
+        } else {
             if (user.getUsername() == null)
                 user.setUsername(temp.getUsername());
             if (!user.isActive())

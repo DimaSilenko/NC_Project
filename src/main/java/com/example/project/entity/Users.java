@@ -13,15 +13,19 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    // User's username
     private String username;
 
+    // User's password
     private String password;
 
+    // Status of user's profile
     private boolean active;
 
+    // User's role or roles
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="user_id")) //храним отдельную таблицу с ролями
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    //храним отдельную таблицу с ролями
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 }

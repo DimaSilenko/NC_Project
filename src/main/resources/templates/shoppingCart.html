@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -21,11 +21,13 @@
                     <td th:text="${item.name}"></td>
                     <td>
                         <div class="inp">
-                            <input type="number" class="ticket" value="1"><p th:text="'  x '+${item.price} + ' ₽'"></p>
+                            <input type="number" class="ticket" value="1">
+                            <p th:text="'  x '+${item.price} + ' ₽'"></p>
                         </div>
                     </td>
                     <td>
-                        <p class="delete" th:text="Delete" th:attr="onclick=|window.location.href='deleteTicket?id=' + ${item.id}|">></p>
+                        <p class="delete" th:text="Delete"
+                           th:attr="onclick=|window.location.href='deleteTicket?id=' + ${item.id}|">></p>
                     </td>
                 </tr>
             </table>

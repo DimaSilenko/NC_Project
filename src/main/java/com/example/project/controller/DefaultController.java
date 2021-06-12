@@ -16,6 +16,7 @@ public class DefaultController {
     @Autowired
     private DefaultService defaultService;
 
+    // Main page
     @GetMapping("/")
     public String index(Model model, Principal principal, HttpServletRequest request) {
         model.addAttribute("curUser", defaultService.checkAuthorization(principal));
@@ -26,6 +27,7 @@ public class DefaultController {
         return "index";
     }
 
+    // info page about film
     @GetMapping("/information")
     public String product(@RequestParam("id") Long id, Model model, Principal principal, HttpServletRequest request) {
         model.addAttribute("product", defaultService.findProductById(id));

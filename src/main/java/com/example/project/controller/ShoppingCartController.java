@@ -19,12 +19,14 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+    // Get shoppingCart page
     @GetMapping("/shoppingCart")
     public String shoppingCart(Model model, HttpServletRequest request, Principal principal) {
         model.addAttribute("products", shoppingCartService.getShoppingCart(request, principal));
         return "shoppingCart";
     }
 
+    // Buy ticket from information page and return main page
     @PostMapping("/buy")
     public String buyTicket(ProductDTO productBuy, HttpServletResponse response, Principal principal) {
 
@@ -33,6 +35,7 @@ public class ShoppingCartController {
         return "redirect:/";
     }
 
+    // Delete ticket in shoppingCart page
     @GetMapping("/deleteTicket")
     public String deleteTicket(@RequestParam("id") Long id, HttpServletResponse response, Principal principal) {
 

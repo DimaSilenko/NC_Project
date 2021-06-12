@@ -30,16 +30,16 @@ public class ShoppingCartService {
     }
 
     public Cookie addToShoppingCart(ProductDTO productBuy, Principal principal) {
-        Cookie cookie = new Cookie(principal.getName()+"|"+ productBuy.getId().toString(),
+        Cookie cookie = new Cookie(principal.getName() + "|" + productBuy.getId().toString(),
                 productBuy.getId().toString());
 
-        cookie.setMaxAge(24*60*60);
+        cookie.setMaxAge(24 * 60 * 60);
 
         return cookie;
     }
 
     public Cookie deleteFromShoppingCart(Long id, Principal principal) {
-        Cookie cookie = new Cookie(principal.getName()+"|"+ id.toString(), null);
+        Cookie cookie = new Cookie(principal.getName() + "|" + id.toString(), null);
 
         cookie.setMaxAge(0);
 
