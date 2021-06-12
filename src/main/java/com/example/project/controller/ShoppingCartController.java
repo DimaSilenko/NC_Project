@@ -1,7 +1,6 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ProductDTO;
-import com.example.project.entity.Product;
 import com.example.project.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

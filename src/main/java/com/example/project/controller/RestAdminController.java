@@ -46,7 +46,7 @@ public class RestAdminController {
 
     @PutMapping("/restUsers/{id}")
     public Users updateUser(@PathVariable(value = "id") Long userId, @RequestBody Users user) {
-        return adminService.restUpdateProduct(userId, user);
+        return adminService.restUpdateUser(userId, user);
     }
 }
 

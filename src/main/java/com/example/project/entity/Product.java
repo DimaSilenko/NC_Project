@@ -3,8 +3,6 @@ package com.example.project.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Entity(name="product")
 @Data

@@ -2,8 +2,6 @@ package com.example.project.controller;
 
 import com.example.project.dto.ProductDTO;
 import com.example.project.dto.ProductTypeDTO;
-import com.example.project.entity.Product;
-import com.example.project.entity.ProductType;
 import com.example.project.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,12 +29,13 @@ public class AdminController {
         return "userList";
     }
 
-    // Add new film
+    // Get addFilm page
     @GetMapping("/addFilm")
     public String addFilm(ProductDTO productDTO, ProductTypeDTO productTypeDTO) {
         return "addFilm";
     }
 
+    // Post to add new film
     @PostMapping("/addFilm")
     public String addFilmDB(
             @Valid ProductDTO product,
@@ -48,6 +47,7 @@ public class AdminController {
         return adminService.addProduct(product, bindingResult, productType, file, attributes);
     }
 
+    // Delete film
     @PostMapping("/delete")
     public String delete(ProductDTO product) {
         adminService.deleteProduct(product.getId());

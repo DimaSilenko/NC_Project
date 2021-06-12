@@ -111,7 +111,7 @@ public class AdminService {
         return productService.save(saveToRepo(product, productType));
     }
 
-    public Users restUpdateProduct(Long userId, Users user) {
+    public Users restUpdateUser(Long userId, Users user) {
 
         Users temp = usersRepository.findById(userId).orElse(new Users());
         if (user.getUsername() != null
