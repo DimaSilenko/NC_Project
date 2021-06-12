@@ -31,7 +31,9 @@ public class AdminController {
 
     // Get addFilm page
     @GetMapping("/addFilm")
-    public String addFilm(ProductDTO productDTO, ProductTypeDTO productTypeDTO) {
+    public String addFilm(Model model) {
+        model.addAttribute("productDTO", new ProductDTO());
+        model.addAttribute("productTypeDTO", new ProductTypeDTO());
         return "addFilm";
     }
 
