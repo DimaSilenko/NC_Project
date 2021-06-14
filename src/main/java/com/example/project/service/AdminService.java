@@ -3,10 +3,13 @@ package com.example.project.service;
 import com.example.project.dto.ProductDTO;
 import com.example.project.dto.ProductTypeDTO;
 import com.example.project.dto.UsersDTO;
+import com.example.project.entity.Users;
+import com.example.project.mapper.UserMapper;
 import com.example.project.model.ProductCreationRequest;
 import com.example.project.service.dto.ProductService;
 import com.example.project.service.dto.ProductTypeService;
 import com.example.project.service.dto.UsersService;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +38,8 @@ public class AdminService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    private UserMapper mapper = Mappers.getMapper(UserMapper.class);
 
     public List<UsersDTO> findAllUsers() {
         return usersService.findAll();
@@ -121,27 +126,20 @@ public class AdminService {
                 && usersService.findByUsername(newUser.getUsername()) != null;
     }
 
-    public UsersDTO restUpdateUser(Long userId, UsersDTO user) {
+    public UsersDTO restUpdateUser(Long userId, UsersDTO newUser) {
 
-        UsersDTO temp = usersService.findById(userId);
-        if (usernameAlreadyTaken(user, temp)) {
-            user = new UsersDTO();
-            user.setUsername("Username is already taken");
+        UsersDTO oldUser = usersService.findById(userId);
+        if (usernameAlreadyTaken(newUser, oldUser)) {
+            newUser = new UsersDTO();
+            newUser.setUsername("Username is already taken");
+            return newUser;
         } else {
-            if (user.getUsername() == null)
-                user.setUsername(temp.getUsername());
-            if (user.getRoles() == null)
-                user.setRoles(temp.getRoles());
-            if (user.getPassword() == null)
-                user.setPassword(temp.getPassword());
-            else
-                user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-            user.setId(userId);
+            if (newUser.getPassword() != null)
+                newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         }
 
-        if (user.getId() == null)
-            return user;
-        return usersService.save(user);
+        mapper.updateUserFromDTO(newUser, oldUser);
+
+        return usersService.save(oldUser);
     }
 }
