@@ -115,12 +115,16 @@ public class AdminService {
         return productService.save(updateProductWithProductType(product, productType));
     }
 
+    private boolean usernameAlreadyTaken(UsersDTO newUser, UsersDTO oldUser) {
+        return newUser.getUsername() != null
+                && !newUser.getUsername().equals(oldUser.getUsername())
+                && usersService.findByUsername(newUser.getUsername()) != null;
+    }
+
     public UsersDTO restUpdateUser(Long userId, UsersDTO user) {
 
         UsersDTO temp = usersService.findById(userId);
-        if (user.getUsername() != null
-                && !user.getUsername().equals(temp.getUsername())
-                && usersService.findByUsername(user.getUsername()) != null) {
+        if (usernameAlreadyTaken(user, temp)) {
             user = new UsersDTO();
             user.setUsername("Username is already taken");
         } else {
