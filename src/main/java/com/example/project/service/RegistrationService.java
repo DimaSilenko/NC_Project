@@ -15,7 +15,7 @@ public class RegistrationService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UsersService usersService;
+    private UsersService usersService;
 
     public boolean addNewUser(UsersDTO users) {
         UsersDTO userFromDB = usersService.findByUsername(users.getUsername());

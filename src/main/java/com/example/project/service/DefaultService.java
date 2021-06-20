@@ -2,7 +2,6 @@ package com.example.project.service;
 
 import com.example.project.dto.ProductDTO;
 import com.example.project.dto.ProductTypeDTO;
-import com.example.project.repository.UsersRepository;
 import com.example.project.service.dto.ProductService;
 import com.example.project.service.dto.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
